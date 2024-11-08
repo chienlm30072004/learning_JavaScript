@@ -68,7 +68,7 @@ function getTotal2(le){
     return result;
 }
 console.log(getTotal2(orders1))
-//for in ---------------------
+//for in json
 console.log('--------------------------------------------------');
 var object1 =
     {
@@ -85,3 +85,68 @@ var array1 = ['javascript', 'java','php'];
 for(var key in array1){
     console.log(array1[key]);
 }
+//homework
+function run(object) {
+    var arr = [];
+    for(var key in object){
+arr.push(`Thuộc tính ${key} có giá trị ${object[key]}`);
+    }
+    return arr;
+}
+
+// Expected results:
+console.log(run({ name: 'Nguyen Van A', age: 16 }));
+// Output:
+// [
+//     "Thuộc tính name có giá trị Nguyen Van A",
+//     "Thuộc tính age có giá trị 16"
+// ]
+console.log('================================================================')
+//for/of loop with array
+var orders2 = [
+    {
+        name: 'Khóa học HTML - CSS Pro',
+        price: 3000000
+    },
+    {
+        name: 'Khóa học Javascript Pro',
+        price: 2500000
+    },
+    {
+        name: 'Khóa học React Pro',
+        price: 3200000
+    }
+]
+for(var value of orders2) {
+    console.log(value);
+}
+//for/of loop with object
+var object2={
+    name:'tò thị te',
+    age : 17
+ }
+
+ for(var value of Object.keys(object2)) {
+    console.log(object2[value]);
+ }
+ //while loop
+ var numm = 0;
+ while(numm < orders2.length) {
+    console.log(orders2[numm]);
+    numm ++;
+ }
+ console.log("================================================================")
+ //do while loop kiểm tra đầu kiện sauu khi lập 1 lần
+ var num2 = 0;
+ do{
+    console.log(orders2[num2]);
+    num2++;
+ }while(num2 <orders2.length);
+// example about do while loop
+// var i =0;
+// var status = false;
+// do{
+// console.log("lần nạp thứ " ,i);
+// i++;
+// status = true;
+// }while(status==true);
