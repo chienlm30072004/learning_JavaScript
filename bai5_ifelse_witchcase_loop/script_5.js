@@ -150,3 +150,34 @@ var object2={
 // i++;
 // status = true;
 // }while(status==true);
+
+//use break and continue in loop to stop the loop
+for(var i = 0 ; i < 10; i++) {
+    if(i%2==0){
+        continue;
+    }else{
+        console.log(i);
+    }
+}
+//nested loop lặp lồng nhau
+var mang = [
+    [1,2],
+    [3,4],
+    [5,6]
+]
+for(var i=0;i<mang.length;i++){
+    for(var j =0;j<mang[i].length;j++){
+        console.log(mang[i][j]);
+        console.log('ngắt');
+    }
+}
+console.log('================================================================');
+//lặp ngược
+for(var i=30;i>0;i-=5){
+    console.log(i);
+}
+console.log('================================================================');
+//không đọc những phần tử giống nhau
+//example ... để bỏ 1 kí tự
+var arr1 = [1,2,3,1,2,3,1,2,3];
+console.log([...(new Set(arr1))]);
