@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>    
+    <table id="main" style="width:100%; height:100%;" cellpadding="5" cellspacing="0" border="0">
+        <tr>
+            <td id="left" style="width:30%; height:100%;" valign="top">
+                <table style="width:100%; height:100%; border:1; margin: 0; padding: 0;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td colspan="100" style="width: 100%">
+                            <fieldset>
+                                <legend><font><b>Lọc dữ liệu</b></font></legend>
+                                <table style="width: 100%; height: 100%; margin: 0; padding: 0;" border="0">
+                                    <tr style="height: 20%;">
+                                        <td colspan=25 style="width: 25%;">
+                                            Công ty
+                                        </td>
+                                        <td colspan=75 style="width:75%;">
+                                            <ts-list id="lstCompany_S" style="width: 100%;" displaymember="CODE_NM" valuemember="CODE" emptyvalue="ALL" emptytextpoint="first"></ts-list>
+                                        </td>
+                                    </tr>
+                                    <tr style="height: 20%;">
+                                        <td colspan=25 style="width: 25%;">
+                                            Ngày đăng tin
+                                        </td>
+                                        <td colspan=75 style="width:75%;">
+                                            <ts-datebox id="dtFromDate" isrequired="false" onchange="OnChangeDate()" />
+                                            ~
+                                            <ts-datebox id="dtToDate" isrequired="false"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="height: 20%;">
+                                        <td colspan=25 style="width:25%;">
+                                            Tin tuyển dụng
+                                        </td>
+                                        <td colspan=75 style="width:75%;">
+                                            <ts-textbox id="txtRecruit" style="width: 100%;" text="" keyPressed="OnSearch()"></ts-textbox>
+                                        </td>
+                                    </tr>
+                                    <tr style="height: 15%;">
+                                        <td colspan=25 style="width: 25%;">
+                                            Hiệu lực Y/N
+                                        </td>
+                                        <td colspan=75 style="width: 75%;">
+                                            <ts-checkbox id="chkActive_S" defaultvalue="Y|N" value="Y" onchange="OnClick(this)" />
+                                        </td>
+                                    </tr>
+                                    <tr style="height:25%;">
+                                        <td colspan=25 style="width:25%;">Số dòng: 
+                                            <ts-label id="lblRecord" style='width:100%' />
+                                        </td>
+                                        <td align="right" colspan=75 style="width: 75%;">
+                                            <ts-button id="btnSearch" img="search" alt="Search" text="Search" onclick="OnSearch()" imgtype="0">Tìm kiếm</ts-button>
+                                        </td>
+                                    </tr>
+                                </table>		
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr style="height:100%;">
+                        <td>
+                            <table colspan="100" style="width:100%; height:100%; margin: 0; padding: 0;">
+                                <tr>
+                                    <td>
+                                        <ts-grid id="grdSearch" rowClick="SearchDetail(sender,event)">  
+                                            <columns>
+                                                <column text="PK" datafield="PK" width="70" columntype="textbox" cellsalign="center" editable=true hidden="true"></column>
+                                                <column text="Mã tin" datafield="JOB_ID" width="90" columntype="textbox" cellsalign="left" editable=true></column>
+                                                <column text="Tiêu đề tuyển dụng" datafield="JOB_TITILE" width="200" columntype="textbox" cellsalign="left" editable=true></column>
+                                                <column text="Ngày đăng tuyển" datafield="START_DT" width="120" columntype="date" cellsalign="left" editable=true></column>
+                                                <column text="Tên Người Đăng" datafield="JOB_BY_NAME" width="150" columntype="textbox" cellsalign="left" editable=true></column>
+                                            </columns>
+                                        </ts-grid>
+                                    </td>
+                                </tr>
+                            </table>	
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td id="right" style="width: 70%; height: 100%;" valign="top">
+                <table style="width:100%; height:100%; margin: 0; padding: 0;" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td colspan="100" width="100%" align="left">
+                            <table width="100%" height="100%">
+                                <tr style="height:5%">
+                                    <td colspan="3" width="3%">
+                                        <ts-button id="ibtnNew" img="new" text="Insert" onclick="OnInsert()" imgtype="0"> Thêm mới </ts-button>
+                                    </td>
+                                    <td colspan="3" width="3%">
+                                        <ts-button id="ibtnUpdate" img="save" text="Save" onclick="OnSave()" imgtype="0"> Sao lưu </ts-button>
+                                    </td>
+                                    <td colspan="3" width="3%">
+                                        <ts-button id="ibtnDelete" img="delete" text="Delete" onclick="OnDelete()" imgtype="0"> Xóa bỏ </ts-button>
+                                    </td>
+                                    <td colspan="3" width="3%">   
+                                    </td>
+                                    <td colspan="3" width="30%">
+                                        <a class="linknewtab" target="_blank"  id="previewLink" href="#"> Xem trước bài đăng tuyển ! </a>
+                                    </td>
+                                    <td colspan="40" width="40%" align="center"></td>
+                                    <td colspan="40" width="40%">
+                                    </td>
+                                    <td colspan="11" width="11%"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100" width="100%">
+                            <fieldset>
+                                <legend><font style="color:green"><b>Thông tin tuyển dụng</b></font></legend>
+                                <table style="width: 100%; height: 100%; margin: 0; padding: 0;" border="0">
+                                    <tr>
+                                        <td colspan=25 width="25%" align="left">Mã tin <b style="color:red"> (*)</b></td>
+                                        <td colspan=30 width="25%">
+                                            <ts-textbox id="txtjob_id" style="width:100%" class="inputnews"> </ts-textbox>
+                                        </td>
+                                        <td colspan=20 width="20%" align="right">Công ty </td>
+                                        <td colspan=5 width="5%" align="left"> </td>
+                                        <td colspan=30 width="25%">
+                                           <ts-list id="lstCompany" style="width: 100%;" displaymember="CODE_NM" valuemember="CODE" emptyvalue="ALL" emptytextpoint="first"></ts-list>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan=25 width="25%" align="left">Ngày đăng tuyển <b style="color:red"> (*)</b></td>
+                                        <td colspan=30 width="25%">
+                                            <ts-datebox id="dtBeginRecruit" />
+                                        </td>
+                                        <td colspan=20 width="20%" align="right">Ngày kết thúc</td>
+                                        <td colspan=5 width="5%" align="left"> </td>
+                                        <td colspan=30 width="25%">
+                                            <ts-datebox id="dtEndRecruit" isrequired="false" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan=25 width="25%" align="left">Hiệu lực Y | N<b style="color:red"> (*)</b></td>
+                                        <td colspan=30 width="25%">
+                                            <ts-checkbox id="chkActive" defaultvalue="Y|N" value="Y" onchange="OnClick(this)" />
+                                        </td>
+                                        <td colspan=20 width="20%" align="right"></td>
+                                        <td colspan=5 width="5%" align="left"> </td>
+                                        <td colspan=30 width="25%"> 
+                                        </td>
+                                    </tr>
+                                </table>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan=100 width="100%">
+                            <fieldset>
+                                <legend><font style="color:green"><b>Thông tin liên hệ</b></font></legend>
+                                <table style="width: 100%; height: 100%" border="0">
+                                    <tr>
+                                        <td colspan=25 width="25%" align="left">Họ và tên :<b style="color:red">(*)</b></td>
+                                        <td colspan=30 width="25%">
+                                            <ts-textbox id="txtFullName" style="width:100%; height: 40px;"></ts-textbox>
+                                        </td>
+                                        <td colspan=20 width="20%" align="right">Email :</td>
+                                        <td colspan=5 width="5%" align="left"></td>
+                                        <td colspan=30 width="25%">
+                                            <ts-textbox id="txtEmail" style="width:100%; height: 40px;"></ts-textbox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan=25 width="25%" align="left">Số điện thoại:<b style="color:red">(*)</b></td>
+                                        <td colspan=30 width="25%">
+                                            <ts-textbox id="txtPhone" style="width:100%; height: 40px;"></ts-textbox>
+                                        </td>
+                                        <td colspan=20 width="20%" align="right">Chức vụ :</td>
+                                        <td colspan=5 width="5%" align="left"></td>
+                                        <td colspan=30 width="25%">
+                                            <ts-textbox id="txtposition" style="width:100%; height: 40px;"></ts-textbox>
+                                        </td>
+                                        
+                                    </tr>
+                                </table>
+                            </fieldset>
+                        </td>
+                    </tr>
+                        <tr class="flex-container">
+                            <td colspan=25 width="25%" align="left">Tiêu đề tuyển dụng <b style="color:red"> (*)</b></td>
+                            <td colspan=75 width="75%"  >
+                                <ts-textbox id="txtTittle" style="width:100%" > </ts-textbox>
+                            </td>
+                        </tr>
+                        <tr style="height: 100%">
+                            <td id="t-right" valign="top" >
+                                <ts-tab id="idTab" border=1 style="width:100%;height:100%;" >				
+                                    <table id="Detail" name="Nội dung chi tiết tuyển dụng" style="width:100%;border:0;height:100%;" cellpadding="0" cellspacing="0" border="0">				
+                                        <tr > 
+                                            <td colspan=50 width="50%" align="right">
+                                                <table width="100%"  style="height:100%">
+                                                    <tr style="width:100%;height:4%" valign="center" >	
+                                                        
+                                                        <td colspan=5 width="5%" style="white-space: nowrap"  align="left" >
+                                                            
+                                                        </td>
+                                                        <td colspan=3 width="3%"  align="left" >
+                                                            <ts-label id="lblRowCount" style='width:30%;color:red'  />
+                                                        </td>
+                                                        <td colspan=10 width="10%"  align="left" >
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr style="height:100%;">
+                                            <td colspan=100 width="100%"  >
+                                                <table style="height:100%;width:100%">
+                                                    <tr style="height:100%;width:100%">
+                                                        <td style="height:100%;width:100%">
+                                                            <ts-richtextbox id="txtRecruitID" style="width:100%;height: 100%;"></ts-richtextbox>
+                                                        </td>
+                                                    </tr>
+                                                </table>		
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table id="VTUT" name="Vị trí ứng tuyển" style="width:100%; height:55%; margin: 0; padding: 0;" cellpadding="0" cellspacing="0" border="0">
+                                        <!-- Content of VTUT table here -->
+                                        <tr style="height: 2%; width: 100%;" align="left">
+                                            <td colspan=100 width="100%" align="left"><ts-button id="btnNew" img="new"    imgtype="0"  onclick="Addnew()">Thêm mới</ts-button></td>
+                                        </tr>
+                                        <tr style="height: 50% ; width: 100%;"  align="top">
+                                            <td colspan=50 width="100%"  align="left">
+                                                <ts-grid id="idGrid_job">
+                                                    <columns>	
+                                                        <!-- <column text="STT"	    	datafield="SEQ" 	   		width="50" 	    columntype="textbox" 	cellsalign="center" 	editable="true" hidden="false" ></column> -->
+                                                        <column text="Mã vị trí"	datafield="POSITION_ID"   	width="120" 	columntype="textbox" 	cellsalign="left"   	editable="true" hidden="false"></column>
+                                                        <column text="Tên vị trí ứng tuyển"   datafield="POSITION_NAME" 	width="350" 	columntype="textbox" 	cellsalign="left" 	    editable="true" hidden="false"></column>
+                                                        <column text="Số lượng cần tuyển"   datafield="POSITION_QTY" 	width="200" 	columntype="textbox" 	cellsalign="left" 	    editable="true" hidden="false"></column>
+                                                        <column text="Ghi chú"    	datafield="DESCRIPTION" 	width="150" 	columntype="textbox" 	cellsalign="center" 	editable="true" hidden="false"></column>
+                                                        <column text="_PK"	    	datafield="PK"    			width="100" 	columntype="textbox" 	cellsalign="center"		editable="false" hidden="true"></column>					
+                                                        <column text="_TJO_JOB_PK"  datafield="TJO_JOB_PK"  	width="100" 	columntype="textbox" 	cellsalign="center"		editable="false" hidden="true"></column>					
+                                                    </columns> 
+                                                </ts-grid>			
+                                            </td>	
+                                        </tr >
+                                    </table>
+                                </ts-tab>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    <script src="./script_7.js" ></script> 
+</body>
+</html>
