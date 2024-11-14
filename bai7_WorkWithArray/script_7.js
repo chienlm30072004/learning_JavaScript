@@ -39,6 +39,7 @@ const games = [
   { name: 'Bóng rổ', participants: 5 },
   { name: 'Bóng đá', participants: 11 }
 ];
+
 function getTeamSports(arr){
   var loop = arr.filter(function(arr){
     return arr.participants>5;
@@ -54,5 +55,34 @@ var newconcerts = games.map(function(arr){
   } ;
 });
 console.log(newconcerts)
+console.log('================================================================');
+var total=0;
+for(var key of games){
+  total += key.participants;
+}
+console.log(total);
+console.log('================================================================');
+//map will loop along each element in the array
+var a=1;
+function dosomething(arr){
+var func = arr.map(function(arr){
+  console.log('lần thứ :',a);
+  a+=1;
+  return {
+    name :`Chơi ${arr.name}`,
+    participants: `Người tham gia ${arr.participants}`,
+   }
+})
+return func;
+}
+console.log(dosomething(games));
+console.log('================================================================');
+//sol-problem by redure 
+//always use function first element and second is element number for reduce if not will wrong   
+//reduce(accumulator,currentValue,Currentindex,originalArray)
 
-
+function reducee(accumulator,currentValue){
+ return accumulator+= currentValue.participants;
+}
+var totalpa = games.reduce(reducee, 0);
+console.log(totalpa);
